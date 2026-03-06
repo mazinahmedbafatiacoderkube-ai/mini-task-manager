@@ -8,6 +8,6 @@ class UserDashboardController extends Controller
     {
         $tasks = auth()->user()->tasks()->latest()->paginate(10);
 
-        return view('dashboard', compact('tasks'));
+        return view('user.dashboard', compact('tasks'));
     }
 }

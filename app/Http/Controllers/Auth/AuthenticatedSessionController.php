@@ -1,55 +1,51 @@
 <?php
 
-    namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth;
 
-    use App\Http\Controllers\Controller;
-    use App\Http\Requests\Auth\LoginRequest;
-    use Illuminate\Http\RedirectResponse;
-    use Illuminate\Http\Request;
-    use Illuminate\Support\Facades\Auth;
-    use Illuminate\View\View;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
-    class AuthenticatedSessionController extends Controller
-    {
-        /**
-         * Display the login view.
-         */
-        public function create(): View
-        
-        {
-            return view('auth.login');
-        }
-
-        /**
-         * Handle an incoming authentication request.
-         */
-public function store(LoginRequest $request): RedirectResponse
+class AuthenticatedSessionController extends Controller
 {
-    $request->authenticate();
-
-    $request->session()->regenerate();
-
-    // Clear intended URL completely
-    session()->forget('url.intended');
-
-    if (auth()->user()->role === 'admin') {
-        return redirect('/admin/dashboard');
+    /**
+     * Display the login view.
+     */
+    public function create(): View
+    {
+        return view('auth.login');
     }
 
-    return redirect('/dashboard');
-}
+    /**
+     * Handle login request
+     */
+    public function store(LoginRequest $request)
+    {
+        $request->authenticate();
 
-        /**s
-         * Destroy an authenticated session.
-         */
-        public function destroy(Request $request): RedirectResponse
-        {
-            Auth::guard('web')->logout();
+        $request->session()->regenerate();
 
-            $request->session()->invalidate();
+        $user = auth()->user();
 
-            $request->session()->regenerateToken();
-
-            return redirect('/');
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.dashboard');
         }
+
+        return redirect()->route('user.dashboard');
     }
+
+    /**
+     * Logout
+     */
+    public function destroy(Request $request)
+    {
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+    }
+}

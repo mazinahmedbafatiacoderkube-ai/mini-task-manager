@@ -15,7 +15,7 @@ class AdminDashboardController extends Controller
     public function index()
     {
         // Get all users with their tasks
-        $users = User::with('tasks')->get();
+        $users = User::where('role', '!=', 'admin')->with('tasks')->get();
 
         return view('admin.dashboard', compact('users'));
     }

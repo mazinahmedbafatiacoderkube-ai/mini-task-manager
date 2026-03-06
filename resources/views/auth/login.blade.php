@@ -1,11 +1,11 @@
 <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
- <link rel="stylesheet" href="{{ asset('css/style.css') }}"> 
-
+ <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+ 
     <form method="POST" action="{{ route('login') }}">
         @csrf
-
+ 
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
@@ -19,7 +19,7 @@
                           autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
-
+ 
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
@@ -31,7 +31,7 @@
                           autocomplete="current-password" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
-
+ 
         <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
@@ -44,10 +44,10 @@
                 </span>
             </label>
         </div>
-
+ 
         <!-- Links + Login Button -->
         <div class="flex items-center justify-between mt-4">
-
+ 
             <div>
                 @if (Route::has('password.request'))
                     <a class="underline text-sm text-gray-600 hover:text-gray-900"
@@ -55,9 +55,9 @@
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif
-
+ 
                 <span class="mx-2 text-gray-400">|</span>
-
+ 
                 @if (Route::has('register'))
                     <a class="underline text-sm text-gray-600 hover:text-gray-900"
                        href="{{ route('register') }}">
@@ -65,11 +65,12 @@
                     </a>
                 @endif
             </div>
-
+ 
             <x-primary-button>
                 {{ __('Log in') }}
             </x-primary-button>
-
+ 
         </div>
     </form>
 </x-guest-layout>
+ 
