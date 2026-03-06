@@ -14,7 +14,7 @@
     </div>
 @endif
 
-<form method="POST" action="{{ route('tasks.store') }}">
+<form method="POST" action="{{ route('user.tasks.store') }}">
     @csrf
 
     <div>

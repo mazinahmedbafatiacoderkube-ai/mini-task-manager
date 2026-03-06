@@ -14,7 +14,7 @@
     </div>
 @endif
 
-<form method="POST" action="{{ route('tasks.update', $task->id) }}">
+<form method="POST" action="{{ route('user.tasks.update', $task->id) }}">
     @csrf
     @method('PUT')
 

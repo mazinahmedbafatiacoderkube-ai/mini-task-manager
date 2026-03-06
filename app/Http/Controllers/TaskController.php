@@ -31,7 +31,7 @@ class TaskController extends Controller
             'user_id' => auth()->id(),
         ]);
 
-        return redirect()->route('dashboard')
+        return redirect()->route('user.dashboard')
             ->with('success', 'Task created successfully!');
     }
 
@@ -66,20 +66,35 @@ class TaskController extends Controller
             'due_date' => $request->due_date,
         ]);
 
-        return redirect()->route('dashboard')
+        return redirect()->route('user.dashboard')
             ->with('success', 'Task updated successfully!');
     }
 
     // Delete task
+    // public function destroy($id)
+    // {
+    //     $task = Task::where('id', $id)
+    //         ->where('user_id', auth()->id())
+    //         ->firstOrFail();
+
+    //     $task->delete();
+
+    //     return redirect()->route('user.dashboard')
+    //         ->with('success', 'Task deleted successfully!');
+    // }
+
     public function destroy($id)
-    {
-        $task = Task::where('id', $id)
-            ->where('user_id', auth()->id())
-            ->firstOrFail();
+{
+    $task = Task::findOrFail($id);
 
-        $task->delete();
+    $task->delete();
 
-        return redirect()->route('dashboard')
-            ->with('success', 'Task deleted successfully!');
-    }
+    return redirect()->back()
+        ->with('success', 'Task deleted successfully!');
+}
+public function index()
+{
+    $tasks = Task::all();
+    return response()->json($tasks);
+}
 }
